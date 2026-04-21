@@ -2,35 +2,45 @@ import axios from "axios";
 
 const BASE_URL = "https://t4e-testserver.onrender.com/api";
 
-export const getDataFromServer = async () => {
+export const getToken = async (studentId, password, set) => {
   try {
+    console.log("[API] Requesting token...");
     const tokenRes = await axios.post(`${BASE_URL}/public/token`, {
-      studentId: "E0223028",
-      password: "147036",
-      set: "setB"
+      studentId,
+      password,
+      set,
     });
 
-    const { token, dataUrl } = tokenRes.data;
+    console.log("[API] Token response:", tokenRes.data);
+    return tokenRes.data;
 
-    console.log("TOKEN:", token);
-    console.log("DATA URL:", dataUrl);
+  } catch (error) {
+    console.error("[API] Token error:", error.response?.data || error.message);
+    console.error("[API] Token status:", error.response?.status);
+    throw error;
+  }
+};
 
+export const getDataset = async (token, dataUrl) => {
+  try {
+    console.log("[API] Fetching dataset from:", dataUrl);
     const dataRes = await axios.get(`${BASE_URL}${dataUrl}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    console.log("DATA:", dataRes.data);
-
+    console.log("[API] Dataset response:", dataRes.data);
+    
     return (
-      dataRes.data?.data?.orders ||
+      dataRes.data?.data ||
       dataRes.data?.orders ||
       dataRes.data
     );
 
   } catch (error) {
-    console.error("API ERROR:", error.response?.data || error);
+    console.error("[API] Dataset error:", error.response?.data || error.message);
+    console.error("[API] Dataset status:", error.response?.status);
     throw error;
   }
 };
