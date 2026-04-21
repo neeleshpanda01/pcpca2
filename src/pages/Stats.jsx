@@ -24,6 +24,9 @@ const Stats = () => {
 
   // Calculate stats
   const totalActivities = validActivities.length;
+  const goalAchievedCount = validActivities.filter((a) => a.goalachived).length;
+  const goalNotAchievedCount = validActivities.filter((a) => !a.goalachived).length;
+
   const totalSteps = validActivities.reduce(
     (sum, a) => sum + (Number(a.steps) || 0),
     0
@@ -36,8 +39,6 @@ const Stats = () => {
     (sum, a) => sum + (Number(a.workoutMinutes) || 0),
     0
   );
-  const goalAchieved = validActivities.filter((a) => a.goalachived).length;
-  const goalNotAchieved = validActivities.filter((a) => !a.goalachived).length;
 
   const avgSteps = (totalSteps / totalActivities).toFixed(2);
   const avgCalories = (totalCalories / totalActivities).toFixed(2);
@@ -50,15 +51,15 @@ const Stats = () => {
       <h1>Fitness Statistics</h1>
 
       <div style={{ marginBottom: "20px" }}>
-        <h2>Overview</h2>
+        <h2>Key Metrics</h2>
         <p>
-          <strong>Total Activities:</strong> {totalActivities}
+          <strong>"totalActivities": </strong> {totalActivities}
         </p>
         <p>
-          <strong>Goal Achieved:</strong> {goalAchieved}
+          <strong>"goalAchievedCount": </strong> {goalAchievedCount}
         </p>
         <p>
-          <strong>Goal Not Achieved:</strong> {goalNotAchieved}
+          <strong>"goalNotAchievedCount": </strong> {goalNotAchievedCount}
         </p>
       </div>
 
