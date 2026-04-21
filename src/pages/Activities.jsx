@@ -3,15 +3,16 @@ import Activity from "../components/Activity";
 import { Link } from "react-router-dom";
 
 const Activities = () => {
-  const { validActivities, loading } = useFitness();
+  const { validActivities, error } = useFitness();
 
-  console.log("[ACTIVITIES PAGE] Loading:", loading, "Valid Activities:", validActivities.length);
+  console.log("[ACTIVITIES PAGE] Error:", error, "Valid Activities:", validActivities.length);
 
-  if (loading) {
+  if (error) {
     return (
       <div>
         <h1>Activities</h1>
-        <p>Loading activities from API...</p>
+        <p style={{ color: "red" }}>Error: {error}</p>
+        <p>Could not load activities from API. Please check console for details.</p>
       </div>
     );
   }

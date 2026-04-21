@@ -5,7 +5,8 @@ import { getToken, getDataset } from "../api/api";
 const initialState = {
   activities: [],
   validActivities: [],
-  loading: true,
+  loading: false,
+  error: null,
 };
 
 export const fitnesscontext = createContext();
@@ -35,6 +36,7 @@ export const FitnessProvider = ({ children }) => {
         dispatch({ type: "SET_ACTIVITIES", payload: activities });
       } catch (err) {
         console.error("[ERROR] Fetch failed:", err.message);
+        dispatch({ type: "SET_ERROR", payload: err.message });
       }
     };
 
@@ -55,6 +57,7 @@ export const FitnessProvider = ({ children }) => {
         activities: state.activities,
         validActivities: state.validActivities,
         loading: state.loading,
+        error: state.error,
         toggleGoalAchieved,
       }}
     >

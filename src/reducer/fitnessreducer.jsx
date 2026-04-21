@@ -5,6 +5,7 @@ const fitnessreducer = (state, action) => {
         ...state,
         activities: Array.isArray(action.payload) ? action.payload : [],
         loading: false,
+        error: null,
       };
 
     case "SET_VALID_ACTIVITIES":
@@ -37,6 +38,13 @@ const fitnessreducer = (state, action) => {
           }
           return activity;
         }),
+      };
+
+    case "SET_ERROR":
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
       };
 
     default:
