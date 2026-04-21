@@ -24,7 +24,7 @@ export const FitnessProvider = ({ children }) => {
         const tokenRes = await getToken(
           "E0223028",
           "147036",
-          "activities"
+          "fitness"
         );
         console.log("[TOKEN] Received:", tokenRes);
 
