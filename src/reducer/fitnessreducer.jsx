@@ -9,21 +9,33 @@ const fitnessreducer = (state, action) => {
       };
 
     case "SET_VALID_ACTIVITIES":
+      const filtered = state.activities.filter((activity) => {
+        const steps = Number(activity.steps) || 0;
+        const caloriesburned = Number(activity.caloriesburned) || 0;
+        const workoutMinutes = Number(activity.workoutMinutes) || 0;
+        const goalachived = activity.goalachived;
+
+        const isValid = (
+          steps > 0 &&
+          caloriesburned > 0 &&
+          workoutMinutes > 0 &&
+          typeof goalachived === "boolean"
+        );
+
+        if (!isValid) {
+          console.log("[FILTER] Activity rejected:", activity);
+          console.log("[FILTER] Steps:", steps, "Calories:", caloriesburned, "Minutes:", workoutMinutes, "Goal:", goalachived, "Type:", typeof goalachived);
+        }
+
+        return isValid;
+      });
+      
+      console.log("[FILTER] Total activities:", state.activities.length);
+      console.log("[FILTER] Valid activities:", filtered.length);
+      
       return {
         ...state,
-        validActivities: state.activities.filter((activity) => {
-          const steps = Number(activity.steps) || 0;
-          const caloriesburned = Number(activity.caloriesburned) || 0;
-          const workoutMinutes = Number(activity.workoutMinutes) || 0;
-          const goalachived = activity.goalachived;
-
-          return (
-            steps > 0 &&
-            caloriesburned > 0 &&
-            workoutMinutes > 0 &&
-            typeof goalachived === "boolean"
-          );
-        }),
+        validActivities: filtered,
       };
 
     case "TOGGLE_GOAL_ACHIEVED":
