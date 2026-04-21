@@ -36,7 +36,9 @@ export const FitnessProvider = ({ children }) => {
         dispatch({ type: "SET_ACTIVITIES", payload: activities });
       } catch (err) {
         console.error("[ERROR] Fetch failed:", err.message);
-        dispatch({ type: "SET_ERROR", payload: err.message });
+        console.error("[ERROR] Full error:", err);
+        const errorMsg = err.response?.data?.message || err.message || "Unknown error";
+        dispatch({ type: "SET_ERROR", payload: `API Error: ${errorMsg}` });
       }
     };
 
