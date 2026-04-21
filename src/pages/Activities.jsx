@@ -29,7 +29,7 @@ const Activities = () => {
   return (
     <div>
       <h1>Activities ({validActivities.length})</h1>
-      <Link to="/filter">Filter Activities by Steps</Link>
+      <Link to="/filter">Filter Activities by Steps</Link> | <Link to="/stats">View Statistics</Link>
       {validActivities.map((activity) => (
         <Activity key={activity.id} activity={activity} />
       ))}
